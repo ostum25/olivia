@@ -1,0 +1,32 @@
+Body{
+    background-color: whitesmoke;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+h2{
+    text-decoration:underline;
+    text-transform: capitalize;
+}
+.header1{
+    text-align: center;
+}
+.header {
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  .body{
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  .video{
+    text-align: center;
+  }
+  .footer{
+    background-color: rgb(218, 214, 214);
+    color:white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+  }

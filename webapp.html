@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Solo Cup Shell Game</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 40px;
+      background: linear-gradient(to bottom, #f8f8f8, #ddd);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .cups {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px 0;
+    }
+
+    .cup {
+      width: 80px;
+      height: 120px;
+      background: linear-gradient(to top, #b30000, #ff4d4d);
+      border: 3px solid #8b0000;
+      border-radius: 20% 20% 10% 10%;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      transform: perspective(100px) rotateX(10deg);
+      transition: transform 0.2s ease;
+    }
+
+    .cup:hover {
+      transform: scale(1.05) perspective(100px) rotateX(10deg);
+    }
+
+    .ball {
+      width: 25px;
+      height: 25px;
+      background: radial-gradient(circle at 8px 8px, #ff6666, #990000);
+      border-radius: 50%;
+      position: absolute;
+      bottom: -15px;
+      left: 27px;
+      box-shadow: 0 0 10px red, inset 0 0 5px #fff;
+      display: none;
+    }
+
+    .result {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 20px 0;
+      height: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Solo Cup Shell Game</h1>
+  <p>Pick a cup — you only get <strong>one shot</strong>!</p>
+
+  <div class="cups">
+    <div class="cup" data-index="0"><div class="ball"></div></div>
+    <div class="cup" data-index="1"><div class="ball"></div></div>
+    <div class="cup" data-index="2"><div class="ball"></div></div>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    const cups = document.querySelectorAll('.cup');
+    const result = document.getElementById('result');
+
+    let ballPosition = -1;
+
+    function shuffleBall() {
+      ballPosition = Math.floor(Math.random() * 3);
+      cups.forEach((cup, index) => {
+        cup.querySelector('.ball').style.display = 'none';
+        cup.classList.remove('disabled');
+      });
+      result.textContent = '';
+    }
+
+    function handleGuess(e) {
+      const guess = parseInt(e.currentTarget.dataset.index);
+      const isCorrect = guess === ballPosition;
+
+      // Reveal ball
+      cups[ballPosition].querySelector('.ball').style.display = 'block';
+
+      // Show result
+      result.textContent = isCorrect ? "🎉 You found it!" : "❌ Try again next time.";
+
+      // Disable all cups temporarily
+      cups.forEach(cup => cup.classList.add('disabled'));
+
+      // Start a new game shortly after
+      setTimeout(shuffleBall, 2000);
+    }
+
+    // Attach event listeners
+    cups.forEach(cup => {
+      cup.addEventListener('click', (e) => {
+        if (!e.currentTarget.classList.contains('disabled')) {
+          handleGuess(e);
+        }
+      });
+    });
+
+    // Start the game
+    shuffleBall();
+  </script>
+
+</body>
+</html>
+   
